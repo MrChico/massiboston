@@ -1,6 +1,7 @@
 let context;
 let analyserL;
 let analyserR;
+let device;
 
 async function setupRNBO() {
     const patchExportURL = "export/patch.export.json";
@@ -58,7 +59,6 @@ async function setupRNBO() {
     } catch (e) {}
 
     // Create the device
-    let device;
     try {
         device = await RNBO.createDevice({ context, patcher });
     } catch (err) {
@@ -76,6 +76,9 @@ async function setupRNBO() {
 
     // Connect the device to the web audio graph
     device.node.connect(outputNode);
+
+    device.node.connect(analyserL, 0, 0);
+    device.node.connect(analyserR, 0, 0);
 
     // (Optional) Extract the name and rnbo version of the patcher from the description
     document.getElementById("patcher-title").innerText = (patcher.desc.meta.filename || "Unnamed Patcher") + " (v" + patcher.desc.meta.rnboversion + ")";
@@ -342,15 +345,14 @@ function makeMIDIKeyboard(device) {
 setupRNBO();
 
 
-// Set up audio input
-
-navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
-  let microphone = context.createMediaStreamSource(stream);
-  let splitter = context.createChannelSplitter(2);
-  microphone.connect(splitter);
-  splitter.connect(analyserL, 0);
-  splitter.connect(analyserR, 1);
-});
+// // Set up audio input
+// navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
+//   let microphone = context.createMediaStreamSource(stream);
+//   let splitter = context.createChannelSplitter(2);
+//   microphone.connect(splitter);
+//   splitter.connect(analyserL, 0);
+//   splitter.connect(analyserR, 1);
+// });
 
 // Set up canvas
 function setup() {
@@ -376,3 +378,5 @@ function draw() {
     point(x, y);
   }
 }
+
+
