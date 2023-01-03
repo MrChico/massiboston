@@ -1,10 +1,16 @@
-async function setup() {
+let context;
+let analyserL;
+let analyserR;
+
+async function setupRNBO() {
     const patchExportURL = "export/patch.export.json";
 
     // Create AudioContext
     const WAContext = window.AudioContext || window.webkitAudioContext;
-    const context = new WAContext();
+    context = new WAContext();
 
+    analyserL = context.createAnalyser();
+    analyserR = context.createAnalyser();
     // Create gain node and connect it to audio output
     const outputNode = context.createGain();
     outputNode.connect(context.destination);
@@ -333,4 +339,40 @@ function makeMIDIKeyboard(device) {
     });
 }
 
-setup();
+setupRNBO();
+
+
+// Set up audio input
+
+navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
+  let microphone = context.createMediaStreamSource(stream);
+  let splitter = context.createChannelSplitter(2);
+  microphone.connect(splitter);
+  splitter.connect(analyserL, 0);
+  splitter.connect(analyserR, 1);
+});
+
+// Set up canvas
+function setup() {
+
+    createCanvas(400, 400);
+}
+
+// Draw x/y plot of two channel split input sound
+function draw() {
+  let dataL = new Uint8Array(analyserL.frequencyBinCount);
+  analyserL.getByteTimeDomainData(dataL);
+  let dataR = new Uint8Array(analyserR.frequencyBinCount);
+  analyserR.getByteTimeDomainData(dataR);
+
+  background(10);
+
+  for (let i = 0; i < dataL.length; i++) {
+    let x = map(dataL[i], 0, 255, 0, width);
+    let y = map(dataR[i], 0, 255, height, 0);
+    let phase = Math.atan2(dataR[i] - 128, dataL[i] - 128);
+    let hue = map(phase, -Math.PI, Math.PI, 0, 360);
+    stroke(hue, 100, 100);
+    point(x, y);
+  }
+}
