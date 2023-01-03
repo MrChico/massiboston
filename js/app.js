@@ -77,8 +77,11 @@ async function setupRNBO() {
     // Connect the device to the web audio graph
     device.node.connect(outputNode);
 
-    device.node.connect(analyserL, 0, 0);
-    device.node.connect(analyserR, 0, 0);
+    const splitter = context.createChannelSplitter(4);
+    device.node.connect(splitter);
+
+    splitter.connect(analyserL, 2);
+    splitter.connect(analyserR, 3);
 
     // (Optional) Extract the name and rnbo version of the patcher from the description
     document.getElementById("patcher-title").innerText = (patcher.desc.meta.filename || "Unnamed Patcher") + " (v" + patcher.desc.meta.rnboversion + ")";
