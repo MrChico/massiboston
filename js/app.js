@@ -1,6 +1,10 @@
 let context;
 let analyserL;
 let analyserR;
+let analyser1;
+let analyser2;
+let rms1;
+let rms2;
 let device;
 
 async function setupRNBO() {
@@ -12,6 +16,8 @@ async function setupRNBO() {
 
     analyserL = context.createAnalyser();
     analyserR = context.createAnalyser();
+    analyser1 = context.createAnalyser();
+    analyser2 = context.createAnalyser();
     // Create gain node and connect it to audio output
     const outputNode = context.createGain();
     outputNode.connect(context.destination);
@@ -79,9 +85,15 @@ async function setupRNBO() {
 
     const splitter = context.createChannelSplitter(4);
     device.node.connect(splitter);
+   
+    splitter.connect(analyserL, 0);
+    splitter.connect(analyserR, 1);
+    splitter.connect(analyser1, 2);
+    splitter.connect(analyser2, 3);
 
-    splitter.connect(analyserL, 2);
-    splitter.connect(analyserR, 3);
+
+
+  
 
     // (Optional) Extract the name and rnbo version of the patcher from the description
     document.getElementById("patcher-title").innerText = (patcher.desc.meta.filename || "Unnamed Patcher") + " (v" + patcher.desc.meta.rnboversion + ")";
@@ -348,29 +360,65 @@ function makeMIDIKeyboard(device) {
 setupRNBO();
 
 
-// // Set up audio input
-// navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
-//   let microphone = context.createMediaStreamSource(stream);
-//   let splitter = context.createChannelSplitter(2);
-//   microphone.connect(splitter);
-//   splitter.connect(analyserL, 0);
-//   splitter.connect(analyserR, 1);
-// });
-
 // Set up canvas
 function setup() {
 
-    createCanvas(400, 400);
+    createCanvas(windowWidth, windowHeight);
 }
 
-// Draw x/y plot of two channel split input sound
 function draw() {
+
+
+    /* Get an array that will hold our values */
+    var buffer1 = new Uint8Array(analyser1.fftSize);
+    var buffer2 = new Uint8Array(analyser2.fftSize);
+    
+    function f(analysr, buf) {
+	/* note that getFloatTimeDomainData will be available in the near future,
+	 * if needed. */
+	analysr.getByteTimeDomainData(buf);
+	/* RMS stands for Root Mean Square, basically the root square of the
+	 * average of the square of each value. */
+	var rms = 0;
+	for (var i = 0; i < buf.length; i++) {
+	    rms += buf[i] * buf[i];
+	}
+	rms /= buf.length;
+	rms = Math.sqrt(rms);
+	return rms;
+    }
+
+    rms1 = f(analyser1, buffer1);
+    rms2 = f(analyser2, buffer2);
+
+
+    
+  // Set the background color to white
+  background(255);
+  let width1 = map(rms1, 0, width, 0, width);
+  let width2 = map(rms2, 0, height, 0, width);
+
+  // Draw the first colored area
+  fill(255, 0, 0); // Set the fill color to red
+  rect(0, 0, width1, height); // Draw the rectangle
+
+  // Draw the gradient between the two colored areas
+  for (let i = width1; i < width1 + width2; i++) {
+    let inter = map(i, width1, width1 + width2, 0, 1);
+    let c = lerpColor(color(255, 0, 0), color(0, 0, 255), inter);
+    stroke(c);
+    line(i, 0, i, height);
+  }
+
+  // Draw the second colored area
+  fill(0, 0, 255); // Set the fill color to blue
+  rect(width1 + width2, 0, width - width1 - width2, height); // Draw the rectangle
+
   let dataL = new Uint8Array(analyserL.frequencyBinCount);
   analyserL.getByteTimeDomainData(dataL);
   let dataR = new Uint8Array(analyserR.frequencyBinCount);
   analyserR.getByteTimeDomainData(dataR);
 
-  background(10);
 
   for (let i = 0; i < dataL.length; i++) {
     let x = map(dataL[i], 0, 255, 0, width);
@@ -380,6 +428,7 @@ function draw() {
     stroke(hue, 100, 100);
     point(x, y);
   }
-}
 
+    
+}
 
