@@ -359,9 +359,10 @@ function makeMIDIKeyboard(device) {
 
 setupRNBO();
 
+/*
 
 // Set up canvas
-/*
+
 function setup() {
 
     createCanvas(windowWidth, windowHeight);
@@ -371,16 +372,16 @@ function draw() {
 
 
     /* Get an array that will hold our values */
-    var buffer1 = new Uint8Array(analyser1.fftSize);
+/*  var buffer1 = new Uint8Array(analyser1.fftSize);
     var buffer2 = new Uint8Array(analyser2.fftSize);
     
     function f(analysr, buf) {
 	/* note that getFloatTimeDomainData will be available in the near future,
 	 * if needed. */
-	analysr.getByteTimeDomainData(buf);
+/*	analysr.getByteTimeDomainData(buf);
 	/* RMS stands for Root Mean Square, basically the root square of the
 	 * average of the square of each value. */
-	var rms = 0;
+/*	var rms = 0;
 	for (var i = 0; i < buf.length; i++) {
 	    rms += buf[i] * buf[i];
 	}
@@ -432,4 +433,5 @@ function draw() {
 
     
 }
-/*
+
+*/
