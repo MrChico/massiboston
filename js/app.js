@@ -361,6 +361,7 @@ setupRNBO();
 
 
 // Set up canvas
+/*
 function setup() {
 
     createCanvas(windowWidth, windowHeight);
@@ -431,4 +432,4 @@ function draw() {
 
     
 }
-
+/*
