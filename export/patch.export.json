@@ -398,7 +398,7 @@
     "presetid": "rnbo",
     "meta": {
       "architecture": "x64",
-      "filename": "RNBO Lotka-Volterra Loader2.maxpat",
+      "filename": "Two Species Interaction Model Synthesis",
       "maxversion": "8.5.2",
       "rnboversion": "1.0.2"
     }
