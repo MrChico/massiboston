@@ -414,10 +414,10 @@ function draw() {
   fill(0, 0, 255); // Set the fill color to blue
   rect(width1 + width2, 0, width - width1 - width2, height); // Draw the rectangle
 
-  let dataL = new Uint8Array(analyserL.frequencyBinCount);
-  analyserL.getByteTimeDomainData(dataL);
-  let dataR = new Uint8Array(analyserR.frequencyBinCount);
-  analyserR.getByteTimeDomainData(dataR);
+  let dataL = new Uint8Array(analyser1.frequencyBinCount);
+  analyser1.getByteTimeDomainData(dataL);
+  let dataR = new Uint8Array(analyser2.frequencyBinCount);
+  analyser2.getByteTimeDomainData(dataR);
 
 
   for (let i = 0; i < dataL.length; i++) {
