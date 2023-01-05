@@ -8,7 +8,7 @@ let rms2;
 let device;
 
 async function setupRNBO() {
-    const patchExportURL = "export/2 Species Interaction Synth.export.json";
+    const patchExportURL = "export/patcher.export.json";
 
     // Create AudioContext
     const WAContext = window.AudioContext || window.webkitAudioContext;
