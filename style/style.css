@@ -12,14 +12,19 @@ html, body {
     z-index: -1;
 }
 
-h2, em {
+h2 {
     font-family: "Open Sans", sans-serif;
-    width: 120%;
+    width: 150%;
 }
+em {
+    font-family: "Open Sans", sans-serif;
+    width: 100%;
+}
+
 
 #rnbo-root {
     margin: auto;
-    max-width: 1200px;
+    max-width: 540px;
 }
 
 #rnbo-clickable-keyboard {
