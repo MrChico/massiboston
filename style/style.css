@@ -14,12 +14,12 @@ html, body {
 
 h2, em {
     font-family: "Open Sans", sans-serif;
-    width: 100%;
+    width: 120%;
 }
 
 #rnbo-root {
     margin: auto;
-    max-width: 600px;
+    max-width: 540px;
 }
 
 #rnbo-clickable-keyboard {
