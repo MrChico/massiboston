@@ -4,7 +4,7 @@
       {
         "type": "ParameterTypeNumber",
         "index": 0,
-        "name": "volume",
+        "name": "Volume",
         "paramId": "volume",
         "minimum": 0.5,
         "maximum": 1,
