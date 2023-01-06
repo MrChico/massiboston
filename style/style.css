@@ -13,11 +13,9 @@ html, body {
 
 h1 {
     margin-top: 150px;
-    font-family: "Open Sans", sans-serif;
-    width: 100%;
 }
 
-h2, em {
+h1, h2, em {
     font-family: "Open Sans", sans-serif;
     width: 100%;
 }
