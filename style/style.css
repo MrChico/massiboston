@@ -12,15 +12,10 @@ html, body {
     z-index: -1;
 }
 
-h2 {
+h2, em {
     font-family: "Open Sans", sans-serif;
     width: 100%;
 }
-em {
-    font-family: "Open Sans", sans-serif;
-    width: 100%;
-}
-
 
 #rnbo-root {
     margin: auto;
