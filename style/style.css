@@ -13,6 +13,7 @@ html, body {
 }
 
 h2, em {
+    font-family: "Open Sans", sans-serif;
     width: 100%;
 }
 
