@@ -4,7 +4,7 @@
       {
         "type": "ParameterTypeNumber",
         "index": 0,
-        "name": "Volume",
+        "name": "Main Volume",
         "paramId": "volume",
         "minimum": 0.5,
         "maximum": 1,
@@ -31,7 +31,7 @@
       {
         "type": "ParameterTypeNumber",
         "index": 1,
-        "name": "Speed (years per second)",
+        "name": "Speed (yrs/s)",
         "paramId": "yearsPerSecond",
         "minimum": 1,
         "maximum": 10,
@@ -139,7 +139,7 @@
       {
         "type": "ParameterTypeNumber",
         "index": 5,
-        "name": "Species 1 competition",
+        "name": "Species 1 comp",
         "paramId": "SP1_interaction",
         "minimum": -1,
         "maximum": 1,
@@ -247,7 +247,7 @@
       {
         "type": "ParameterTypeNumber",
         "index": 9,
-        "name": "Species 2 competition",
+        "name": "Species 2 comp",
         "paramId": "SP2_interaction",
         "minimum": -1,
         "maximum": 1,
