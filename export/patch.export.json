@@ -13,7 +13,7 @@
         "initialValue": 0.75,
         "isEnum": false,
         "enumValues": [],
-        "displayName": "",
+        "displayName": "Volume",
         "unit": "",
         "order": 0,
         "displayorder": "-",
